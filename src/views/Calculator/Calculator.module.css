@@ -1,0 +1,33 @@
+.grid-container {
+  margin: auto;
+  max-width: 1200px;
+}
+
+.input-legend {
+  background-color: black;
+  color: #fff;
+  padding: 0.5em;
+}
+
+.input-area label {
+  padding-right: 0.2rem;
+}
+
+.input-panel {
+  margin: 1em;
+}
+
+.cell-input {
+  display: block;
+  border: white;
+  outline: none;
+  width: 100%;
+}
+
+@media screen and (min-width: 460px) {
+  .input-area {
+    margin: initial;
+    display: flex;
+    justify-content: space-around;
+  }
+}

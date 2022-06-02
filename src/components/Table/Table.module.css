@@ -1,0 +1,118 @@
+.btn-text {
+  display: block;
+  text-align: center;
+  padding-top: 0.2rem;
+}
+
+.btn-text:hover {
+  cursor: pointer;
+}
+
+.table {
+  display: flex;
+  max-width: 13.5rem;
+}
+
+.body {
+  display: flex;
+  overflow-x: scroll;
+  padding-bottom: 1rem;
+}
+
+.header-cell,
+.cell {
+  font-size: var(--sm-font-size);
+  height: var(--cell-height);
+}
+
+.header-cell:not(:first-of-type) {
+  border: thin dotted lightgray;
+  height: 1.125rem;
+  overflow-y: hidden;
+}
+
+.header-cell:first-of-type {
+  font-weight: 600;
+  padding: 0 0.5rem;
+  height: 1.125rem;
+  border: thin dotted lightgray;
+}
+
+.cell:not(:first-of-type) {
+  border: thin dotted lightgray;
+  height: 1.125rem;
+}
+
+.cell:first-of-type {
+  border: thin dotted lightgray;
+  font-weight: 600;
+  padding: 0 0.5rem;
+  font-size: var(--sm-font-size);
+  height: 1.125rem;
+  text-align: center;
+}
+
+@media (min-width: 460px) {
+  .table {
+    display: initial;
+    max-width: initial;
+  }
+
+  .body {
+    display: initial;
+    overflow-x: initial;
+  }
+
+  .row {
+    display: flex;
+  }
+
+  .header-cell:not(:first-of-type) {
+    border: initial;
+    height: 2rem;
+  }
+
+  .header-cell:first-of-type {
+    border: initial;
+    padding: initial;
+    height: 2rem;
+  }
+
+  .cell:first-of-type {
+    font-weight: initial;
+    padding: initial;
+    border: thin dotted lightgray;
+    height: 2rem;
+  }
+
+  .cell:not(:first-of-type) {
+    height: 2rem;
+  }
+
+  .header-cell {
+    flex: 1;
+    font-weight: 600;
+    box-sizing: border-box;
+    text-align: center;
+    overflow: hidden;
+    height: 2rem;
+  }
+
+  .cell {
+    flex: 1;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border: initial;
+    height: 2rem;
+  }
+}
+
+@media (min-width: 1000px) {
+  .header-cell {
+    font-size: var(--med-font-size);
+  }
+  .cell {
+    font-size: var(--med-font-size);
+  }
+}

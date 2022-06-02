@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@components": [
+        "src/components"
+      ],
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@hooks": [
+        "src/hooks"
+      ],
+      "@hooks/*": [
+        "src/hooks/*"
+      ],
+      "@math": [
+        "src/math"
+      ],
+      "@math/*": [
+        "src/math/*"
+      ],
+      "@views": [
+        "src/views"
+      ],
+      "@views/*": [
+        "src/views/*"
+      ],
+      "@common": [
+        "src/common.js"
+      ],
+    }
+  }
+}

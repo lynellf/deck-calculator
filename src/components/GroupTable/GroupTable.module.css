@@ -1,0 +1,32 @@
+.container {
+  font-size: 0.4rem;
+  display: flex;
+}
+
+.container input {
+  font-size: 0.3rem;
+  display: block;
+  height: 100%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.container {
+  font-size: 1rem;
+  display: initial;
+}
+
+.container input {
+  font-size: 0.80rem;
+}
+
+.cell-color-2 {
+  background-color: lawngreen;
+}
+
+.cell-input {
+  display: block;
+  border: white;
+  outline: none;
+  width: 100%;
+}

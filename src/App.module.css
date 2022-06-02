@@ -1,0 +1,11 @@
+:root {
+  --sm-font-size: 0.7rem;
+  --med-font-size: 0.8rem;
+  --cell-height: 1.125rem;
+}
+
+.App {
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  display: flex;
+}
