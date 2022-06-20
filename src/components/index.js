@@ -9,3 +9,5 @@ export {
   HeaderCell,
   Head as TableHead
 } from "./Table";
+export { Modal } from "./Modal";
+export { Combo } from "./Combo";

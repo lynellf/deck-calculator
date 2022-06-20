@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useCalculator } from "@hooks";
 import {
   Table,
@@ -5,10 +6,27 @@ import {
   TableHead as Head,
   TableRow as Row,
   TableCell as Cell,
-  HeaderCell
+  HeaderCell,
+  Combo,
+  Modal
 } from "@components";
 
-export default function NewCalc() {
+const comboState = {
+  isOpen: false,
+  selectedCombo: undefined
+};
+
+const closeModal = (setState) => () => setState(comboState);
+const openWithEdits = (setState, selectedCombo) => () => {
+  setState({ isOpen: true, selectedCombo });
+};
+const openModal = (setState) => () =>
+  setState((state) => ({ ...state, isOpen: true }));
+
+export default function NewCalculator() {
+  const [{ isOpen, selectedCombo }, setState] = useState(comboState);
+  const handleClose = closeModal(setState);
+
   const {
     state: ctx,
     handleEntryAdd,
@@ -18,11 +36,27 @@ export default function NewCalc() {
     handleHandSize,
     handleDeckSize,
     handleFileOpen,
-    handleSave
+    handleSave,
+    handleComboAdd,
+    handleComboRemove,
+    handleCalculateHand,
+    handleTotalHandsChange,
+    handleShufflesChange
   } = useCalculator();
 
   const {
-    context: { inputHeaders, displayHeaders, entries, deckSize, handSize }
+    context: {
+      inputHeaders,
+      displayHeaders,
+      entries,
+      deckSize,
+      handSize,
+      combos,
+      totalComboProb,
+      averageOpening,
+      totalHands,
+      totalShuffles
+    }
   } = ctx;
 
   return (
@@ -58,8 +92,8 @@ export default function NewCalc() {
         <Table>
           <Head>
             <Row>
-              {inputHeaders.map((header) => (
-                <HeaderCell key={header}>{header}</HeaderCell>
+              {inputHeaders.map(({ label, id }) => (
+                <HeaderCell key={id}>{label}</HeaderCell>
               ))}
             </Row>
           </Head>
@@ -106,6 +140,7 @@ export default function NewCalc() {
                   <Cell>{entry.name}</Cell>
                   <Cell>{entry.count}</Cell>
                   <Cell />
+                  <Cell />
                 </Row>
               );
             })}
@@ -113,12 +148,12 @@ export default function NewCalc() {
         </Table>
       </div>
 
-      <div id="displayArea">
+      <div id="standardProbs">
         <Table>
           <Head>
             <Row>
-              {displayHeaders.map((header) => (
-                <HeaderCell key={header}>{header}</HeaderCell>
+              {displayHeaders.map(({ label, id }) => (
+                <HeaderCell key={id}>{label}</HeaderCell>
               ))}
             </Row>
           </Head>
@@ -127,12 +162,75 @@ export default function NewCalc() {
               <Row key={entry.id}>
                 <Cell>{entry.name}</Cell>
                 {entry?.probs?.map((prob, index) => (
-                  <Cell key={index}>{prob}</Cell>
+                  <Cell key={index}>{prob.toFixed(2)}</Cell>
                 ))}
               </Row>
             ))}
           </Body>
         </Table>
+      </div>
+
+      <div>
+        <h2>Combos - Success Rate: {totalComboProb.toFixed(2)}</h2>
+        <Table>
+          <Head>
+            <Row>
+              <HeaderCell>Name</HeaderCell>
+              <HeaderCell>Probability</HeaderCell>
+              <HeaderCell>Edit</HeaderCell>
+              <HeaderCell>Remove</HeaderCell>
+            </Row>
+          </Head>
+          <Body>
+            {combos.map((combo) => (
+              <Row key={combo.id}>
+                <Cell>{combo.name}</Cell>
+                <Cell>{combo?.prob?.toFixed(2) ?? 0}</Cell>
+                <Cell>
+                  <button onClick={openWithEdits(setState, combo)}>Edit</button>
+                </Cell>
+                <Cell>
+                  <button onClick={handleComboRemove(combo.id)}>Remove</button>
+                </Cell>
+              </Row>
+            ))}
+          </Body>
+        </Table>
+        <div>
+          <div>
+            <button onClick={openModal(setState)}>Add Combo</button>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h2>Opening Hand</h2>
+        <div>
+          <label htmlFor="totalHands">Total Hands</label>
+          <input
+            type="number"
+            value={totalHands}
+            onInput={handleTotalHandsChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="totalShuffles">Shuffles Per Hand</label>
+          <input
+            type="number"
+            value={totalShuffles}
+            onInput={handleShufflesChange}
+          />
+        </div>
+
+        <div>
+          <button onClick={handleCalculateHand}>Calculate</button>
+        </div>
+
+        <ol>
+          {averageOpening.map((card, index) => (
+            <li key={index}>{card}</li>
+          ))}
+        </ol>
       </div>
 
       <div>
@@ -142,6 +240,18 @@ export default function NewCalc() {
           <button onClick={handleSave(ctx.context)}>Save Settings</button>
         </div>
       </div>
+
+      <Modal isOpen={isOpen} onClose={handleClose}>
+        <Combo
+          {...{
+            handleComboAdd,
+            handleComboRemove,
+            entries,
+            combo: selectedCombo,
+            handleClose
+          }}
+        />
+      </Modal>
     </div>
   );
 }

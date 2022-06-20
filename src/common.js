@@ -20,7 +20,7 @@ export const toFixed =
 
 export const defaults = {
   getProb: (_totalCopies, _copiesDrawn) => 1,
-  item: { name: "", count: 0, prob: 0, subProbs: [] },
+  item: { name: "", count: 0, prob: 0, subProbs: [], tags: [] },
   handSize: 5,
   deckSize: 40,
   copiesDrawn: 0,
